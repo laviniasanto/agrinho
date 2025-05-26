@@ -1,113 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Chute ao Gol</title>
+  <meta charset="UTF-8" />
+  <title>Jogo Campo e Cidade</title>
   <style>
     body {
-      background-color: #228B22;
-      font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #ddd;
+      text-align: center;
+      user-select: none;
     }
-
     h1 {
-      color: white;
-      margin-top: 20px;
+      margin: 10px 0;
     }
-
-    #campo {
+    #container {
       position: relative;
+      margin: 0 auto;
       width: 800px;
-      height: 400px;
-      margin: 20px auto;
-      background: url('https://i.imgur.com/4YVZ2zg.png') no-repeat center;
-      background-size: cover;
-      border: 5px solid white;
+      height: 450px;
+      border: 3px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #999;
+      overflow: hidden;
       border-radius: 10px;
-      box-shadow: 0 0 10px #000;
+    }
+    #campo, #cidade {
+      position: absolute;
+      width: 800px;
+      height: 450px;
+      top: 0; left: 0;
+      transition: opacity 0.5s ease;
+    }
+    #campo {
+      background: url('https://i.imgur.com/qhKMY0R.jpg') no-repeat center/cover;
+    }
+    #cidade {
+      background: url('https://i.imgur.com/gUxG6FM.jpg') no-repeat center/cover;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    #bola {
-      width: 60px;
-      height: 60px;
-      background: url('https://i.imgur.com/GXjFvXx.png') no-repeat center;
+    #personagem {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://i.imgur.com/fH7FwHf.png') no-repeat center/contain;
+      top: 200px;
+      left: 380px;
+      z-index: 10;
+      transition: background-image 0.3s;
+    }
+
+    #item {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: 100px;
+      left: 100px;
+      z-index: 9;
       background-size: contain;
-      position: absolute;
-      bottom: 10px;
-      left: calc(50% - 30px);
-      cursor: pointer;
+      background-repeat: no-repeat;
     }
 
-    #gol {
-      width: 120px;
-      height: 100px;
-      position: absolute;
-      top: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border: 2px solid white;
-      border-radius: 10px;
-    }
-
-    #placar {
-      color: white;
-      font-size: 24px;
-      margin-top: 10px;
+    #botoes {
+      margin: 15px 0;
     }
 
     button {
       padding: 10px 20px;
       font-size: 16px;
-      margin-top: 10px;
+      margin: 0 10px;
       cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #555;
+    }
+
+    #placar {
+      font-size: 20px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <h1>⚽ Chute ao Gol!</h1>
-  <div id="campo">
-    <div id="gol"></div>
-    <div id="bola" onclick="chutar()"></div>
+  <h1>Jogo Campo e Cidade</h1>
+  <div id="container">
+    <div id="campo"></div>
+    <div id="cidade"></div>
+    <div id="item"></div>
+    <div id="personagem"></div>
   </div>
-  <div id="placar">Gols: 0</div>
-  <button onclick="iniciarJogo()">Iniciar Jogo</button>
+
+  <div id="botoes">
+    <button onclick="mudarAmbiente('campo')">Ir para o Campo</button>
+    <button onclick="mudarAmbiente('cidade')">Ir para a Cidade</button>
+  </div>
+
+  <div id="placar">Frutas: 0 | Moedas: 0</div>
 
   <script>
-    let gols = 0;
-    const bola = document.getElementById('bola');
-    const gol = document.getElementById('gol');
+    const container = document.getElementById('container');
     const campo = document.getElementById('campo');
+    const cidade = document.getElementById('cidade');
+    const personagem = document.getElementById('personagem');
+    const item = document.getElementById('item');
     const placar = document.getElementById('placar');
 
-    function iniciarJogo() {
-      gols = 0;
-      placar.textContent = 'Gols: 0';
-      moverGol();
-    }
+    let ambienteAtivo = 'campo';
+    let posX = 380;
+    let posY = 200;
+    let largura = container.clientWidth;
+    let altura = container.clientHeight;
 
-    function moverGol() {
-      const maxX = campo.clientWidth - gol.clientWidth;
-      const posX = Math.random() * maxX;
-      gol.style.left = posX + 'px';
-    }
+    let frutas = 0;
+    let moedas = 0;
 
-    function chutar() {
-      const bolaX = bola.offsetLeft + bola.offsetWidth / 2;
-      const golX = gol.offsetLeft;
-      const golWidth = gol.offsetWidth;
-
-      if (bolaX >= golX && bolaX <= golX + golWidth) {
-        gols++;
-        placar.textContent = 'Gols: ' + gols;
-      } else {
-        placar.textContent = 'Errou! Gols: ' + gols;
+    const itens = {
+      campo: {
+        url: 'https://i.imgur.com/hZ0H7Cw.png', // fruta
+      },
+      cidade: {
+        url: 'https://i.imgur.com/1x2XxZ7.png', // moeda
       }
+    };
 
-      moverGol();
+    function mudarAmbiente(novoAmbiente) {
+      ambienteAtivo = novoAmbiente;
+      if(ambienteAtivo === 'campo') {
+        campo.style.opacity = '1';
+        campo.style.pointerEvents = 'auto';
+        cidade.style.opacity = '0';
+        cidade.style.pointerEvents = 'none';
+        personagem.style.backgroundImage = "url('https://i.imgur.com/fH7FwHf.png')";
+      } else {
+        cidade.style.opacity = '1';
+        cidade.style.pointerEvents = 'auto';
+        campo.style.opacity = '0';
+        campo.style.pointerEvents = 'none';
+        personagem.style.backgroundImage = "url('https://i.imgur.com/OQJ6aNZ.png')";
+      }
+      posicionarItemAleatorio();
     }
-  </script>
-</body>
-</html>
 
+    function posicionarItemAleatorio() {
+      // Evita o personagem pegar item já na mesma posição
+      const padding = 40;
+      const maxX = largura - item.clientWidth - padding;
+      const m
