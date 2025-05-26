@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jogo Campo e Cidade com Som e Animação</title>
+<title>Jogo Campo e Cidade sem imagens</title>
 <style>
   body {
     margin: 0; font-family: Arial, sans-serif;
-    background: #eef2f3;
+    background: #f0f0f0;
     text-align: center;
     user-select: none;
   }
@@ -40,17 +40,18 @@
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
     position: relative;
     overflow: hidden;
-    background-size: cover;
-    background-position: center;
+    background-color: #a8d5a2; /* campo padrão */
   }
-  #itens {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  #jogador {
+    width: 40px;
+    height: 40px;
+    background-color: #1565c0;
+    position: absolute;
+    top: 180px;
+    left: 380px;
+    border-radius: 6px;
   }
   .item {
-    width: 50px;
-    height: 50px;
     position: absolute;
     cursor: pointer;
     transition: transform 0.2s;
@@ -58,13 +59,19 @@
   .item:hover {
     transform: scale(1.2);
   }
-  .pulo {
-    animation: pulo 0.4s ease forwards;
+  .fruta {
+    width: 30px;
+    height: 30px;
+    background-color: #fdd835;
+    border-radius: 50%;
+    border: 2px solid #fbc02d;
   }
-  @keyframes pulo {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0); }
+  .moeda {
+    width: 30px;
+    height: 30px;
+    background-color: #616161;
+    border-radius: 6px;
+    border: 2px solid #424242;
   }
   #placar {
     margin-top: 15px;
@@ -75,100 +82,139 @@
 </head>
 <body>
 
-  <h1>Explorar Campo e Cidade</h1>
+<h1>Jogo Campo e Cidade sem imagens</h1>
 
-  <div id="botoes">
-    <button onclick="mudarAmbiente('campo')">Campo</button>
-    <button onclick="mudarAmbiente('cidade')">Cidade</button>
-    <button onclick="resetarJogo()" style="background-color: #a52a2a;">Resetar Placar</button>
-  </div>
+<div id="botoes">
+  <button onclick="mudarAmbiente('campo')">Campo</button>
+  <button onclick="mudarAmbiente('cidade')">Cidade</button>
+</div>
 
-  <div id="ambiente">
-    <div id="itens"></div>
-  </div>
+<div id="ambiente">
+  <div id="jogador"></div>
+</div>
 
-  <div id="placar">Frutas: 0 | Moedas: 0</div>
-
-  <!-- Som de coleta (feito no free sound) -->
-  <audio id="somColeta" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+<div id="placar">Frutas: 0 | Moedas: 0</div>
 
 <script>
-  const ambienteDiv = document.getElementById('ambiente');
-  const itensDiv = document.getElementById('itens');
-  const placarDiv = document.getElementById('placar');
-  const somColeta = document.getElementById('somColeta');
+  const ambiente = document.getElementById('ambiente');
+  const jogador = document.getElementById('jogador');
+  const placar = document.getElementById('placar');
 
   let ambienteAtual = 'campo';
   let frutas = 0;
   let moedas = 0;
 
-  const fundos = {
-    campo: 'https://i.imgur.com/qhKMY0R.jpg',
-    cidade: 'https://i.imgur.com/gUxG6FM.jpg'
-  };
+  let jogadorPos = { x: 380, y: 180 };
+  const passo = 20;
+  const jogadorSize = 40;
 
-  const imagensItens = {
-    campo: 'https://i.imgur.com/hZ0H7Cw.png',   // fruta
-    cidade: 'https://i.imgur.com/1x2XxZ7.png'  // moeda
-  };
+  let itens = [];
 
-  function mudarAmbiente(novo) {
-    ambienteAtual = novo;
-    ambienteDiv.style.backgroundImage = `url(${fundos[novo]})`;
+  function mudarAmbiente(novoAmbiente) {
+    ambienteAtual = novoAmbiente;
+    if (novoAmbiente === 'campo') {
+      ambiente.style.backgroundColor = '#a8d5a2'; // verde claro
+    } else {
+      ambiente.style.backgroundColor = '#cfd8dc'; // cinza claro
+    }
+    limparItens();
     gerarItens();
+    resetarJogador();
+  }
+
+  function resetarJogador() {
+    jogadorPos = { x: 380, y: 180 };
+    atualizarPosicaoJogador();
+  }
+
+  function criarItem(x, y, tipo) {
+    const item = document.createElement('div');
+    item.classList.add('item');
+    if (tipo === 'fruta') {
+      item.classList.add('fruta');
+    } else {
+      item.classList.add('moeda');
+    }
+    item.style.left = x + 'px';
+    item.style.top = y + 'px';
+    ambiente.appendChild(item);
+    itens.push({element: item, x, y, tipo});
+  }
+
+  function limparItens() {
+    itens.forEach(i => ambiente.removeChild(i.element));
+    itens = [];
   }
 
   function gerarItens() {
-    itensDiv.innerHTML = '';
-    const quantidade = 7;
+    const quantidade = 8;
+    const maxX = ambiente.clientWidth - 30;
+    const maxY = ambiente.clientHeight - 30;
+
     for(let i = 0; i < quantidade; i++) {
-      const item = document.createElement('img');
-      item.src = imagensItens[ambienteAtual];
-      item.className = 'item';
-      // posição aleatória dentro do ambiente
-      const maxX = ambienteDiv.clientWidth - 50;
-      const maxY = ambienteDiv.clientHeight - 50;
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-      item.style.left = `${x}px`;
-      item.style.top = `${y}px`;
-      item.onclick = () => coletarItem(item);
-      itensDiv.appendChild(item);
+      let x = Math.floor(Math.random() * maxX);
+      let y = Math.floor(Math.random() * maxY);
+      // evitar spawn muito perto do jogador
+      if (Math.abs(x - jogadorPos.x) < 50 && Math.abs(y - jogadorPos.y) < 50) {
+        x = (x + 100) % maxX;
+        y = (y + 100) % maxY;
+      }
+      criarItem(x, y, ambienteAtual === 'campo' ? 'fruta' : 'moeda');
     }
   }
 
-  function coletarItem(item) {
-    // Animação pulo
-    item.classList.add('pulo');
-    somColeta.currentTime = 0;
-    somColeta.play();
+  function atualizarPosicaoJogador() {
+    jogador.style.left = jogadorPos.x + 'px';
+    jogador.style.top = jogadorPos.y + 'px';
+  }
 
-    // Espera acabar a animação antes de remover
-    item.addEventListener('animationend', () => {
-      item.remove();
-    }, {once: true});
+  function checarColisao() {
+    for(let i = 0; i < itens.length; i++) {
+      const it = itens[i];
+      if (
+        jogadorPos.x < it.x + 30 &&
+        jogadorPos.x + jogadorSize > it.x &&
+        jogadorPos.y < it.y + 30 &&
+        jogadorPos.y + jogadorSize > it.y
+      ) {
+        // coletou
+        if (it.tipo === 'fruta') frutas++;
+        else moedas++;
 
-    if (ambienteAtual === 'campo') {
-      frutas++;
-    } else {
-      moedas++;
+        ambiente.removeChild(it.element);
+        itens.splice(i, 1);
+        i--;
+        atualizarPlacar();
+      }
     }
-    atualizarPlacar();
   }
 
   function atualizarPlacar() {
-    placarDiv.textContent = `Frutas: ${frutas} | Moedas: ${moedas}`;
+    placar.textContent = `Frutas: ${frutas} | Moedas: ${moedas}`;
   }
 
-  function resetarJogo() {
-    frutas = 0;
-    moedas = 0;
-    atualizarPlacar();
-    gerarItens();
-  }
+  window.addEventListener('keydown', e => {
+    switch(e.key) {
+      case 'ArrowUp':
+        jogadorPos.y = Math.max(0, jogadorPos.y - passo);
+        break;
+      case 'ArrowDown':
+        jogadorPos.y = Math.min(ambiente.clientHeight - jogadorSize, jogadorPos.y + passo);
+        break;
+      case 'ArrowLeft':
+        jogadorPos.x = Math.max(0, jogadorPos.x - passo);
+        break;
+      case 'ArrowRight':
+        jogadorPos.x = Math.min(ambiente.clientWidth - jogadorSize, jogadorPos.x + passo);
+        break;
+    }
+    atualizarPosicaoJogador();
+    checarColisao();
+  });
 
-  // Inicializa o jogo no campo
+  // inicia no campo
   mudarAmbiente('campo');
+  atualizarPlacar();
 </script>
 
 </body>
