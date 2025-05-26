@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo do Quadrado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    #jogo {
+      width: 600px;
+      height: 400px;
+      margin: 20px auto;
+      position: relative;
+      background-color: #fff;
+      border: 2px solid #000;
+    }
+
+    #quadrado {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      position: absolute;
+      cursor: pointer;
+    }
+
+    #pontos {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Jogo do Quadrado</h1>
+  <div id="jogo">
+    <div id="quadrado"></div>
+  </div>
+  <div id="pontos">Pontos: 0</div>
+  <button onclick="iniciarJogo()">Iniciar Jogo</button>
+
+  <script>
+    const quadrado = document.getElementById('quadrado');
+    const jogo = document.getElementById('jogo');
+    const pontosTexto = document.getElementById('pontos');
+    let pontos = 0;
+    let intervalo;
+
+    function moverQuadrado() {
+      const maxX = jogo.clientWidth - quadrado.offsetWidth;
+      const maxY = jogo.clientHeight - quadrado.offsetHeight;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      quadrado.style.left = x + 'px';
+      quadrado.style.top = y + 'px';
+    }
+
+    quadrado.onclick = function() {
+      pontos++;
+      pontosTexto.textContent = 'Pontos: ' + pontos;
+      moverQuadrado();
+    };
+
+    function iniciarJogo() {
+      pontos = 0;
+      pontosTexto.textContent = 'Pontos: 0';
+      moverQuadrado();
+      clearInterval(intervalo);
+      intervalo = setInterval(moverQuadrado, 1000);
+    }
+  </script>
+</body>
+</html>
