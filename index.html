@@ -2,32 +2,56 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Jogo do Quadrado</title>
+  <title>Chute ao Gol</title>
   <style>
     body {
+      background-color: #228B22;
       font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
     }
 
-    #jogo {
-      width: 600px;
+    h1 {
+      color: white;
+      margin-top: 20px;
+    }
+
+    #campo {
+      position: relative;
+      width: 800px;
       height: 400px;
       margin: 20px auto;
-      position: relative;
-      background-color: #fff;
-      border: 2px solid #000;
+      background: url('https://i.imgur.com/4YVZ2zg.png') no-repeat center;
+      background-size: cover;
+      border: 5px solid white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
     }
 
-    #quadrado {
-      width: 50px;
-      height: 50px;
-      background-color: red;
+    #bola {
+      width: 60px;
+      height: 60px;
+      background: url('https://i.imgur.com/GXjFvXx.png') no-repeat center;
+      background-size: contain;
       position: absolute;
+      bottom: 10px;
+      left: calc(50% - 30px);
       cursor: pointer;
     }
 
-    #pontos {
+    #gol {
+      width: 120px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      border-radius: 10px;
+    }
+
+    #placar {
+      color: white;
       font-size: 24px;
       margin-top: 10px;
     }
@@ -35,49 +59,55 @@
     button {
       padding: 10px 20px;
       font-size: 16px;
-      margin-top: 20px;
+      margin-top: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>Jogo do Quadrado</h1>
-  <div id="jogo">
-    <div id="quadrado"></div>
+  <h1>⚽ Chute ao Gol!</h1>
+  <div id="campo">
+    <div id="gol"></div>
+    <div id="bola" onclick="chutar()"></div>
   </div>
-  <div id="pontos">Pontos: 0</div>
+  <div id="placar">Gols: 0</div>
   <button onclick="iniciarJogo()">Iniciar Jogo</button>
 
   <script>
-    const quadrado = document.getElementById('quadrado');
-    const jogo = document.getElementById('jogo');
-    const pontosTexto = document.getElementById('pontos');
-    let pontos = 0;
-    let intervalo;
-
-    function moverQuadrado() {
-      const maxX = jogo.clientWidth - quadrado.offsetWidth;
-      const maxY = jogo.clientHeight - quadrado.offsetHeight;
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      quadrado.style.left = x + 'px';
-      quadrado.style.top = y + 'px';
-    }
-
-    quadrado.onclick = function() {
-      pontos++;
-      pontosTexto.textContent = 'Pontos: ' + pontos;
-      moverQuadrado();
-    };
+    let gols = 0;
+    const bola = document.getElementById('bola');
+    const gol = document.getElementById('gol');
+    const campo = document.getElementById('campo');
+    const placar = document.getElementById('placar');
 
     function iniciarJogo() {
-      pontos = 0;
-      pontosTexto.textContent = 'Pontos: 0';
-      moverQuadrado();
-      clearInterval(intervalo);
-      intervalo = setInterval(moverQuadrado, 1000);
+      gols = 0;
+      placar.textContent = 'Gols: 0';
+      moverGol();
+    }
+
+    function moverGol() {
+      const maxX = campo.clientWidth - gol.clientWidth;
+      const posX = Math.random() * maxX;
+      gol.style.left = posX + 'px';
+    }
+
+    function chutar() {
+      const bolaX = bola.offsetLeft + bola.offsetWidth / 2;
+      const golX = gol.offsetLeft;
+      const golWidth = gol.offsetWidth;
+
+      if (bolaX >= golX && bolaX <= golX + golWidth) {
+        gols++;
+        placar.textContent = 'Gols: ' + gols;
+      } else {
+        placar.textContent = 'Errou! Gols: ' + gols;
+      }
+
+      moverGol();
     }
   </script>
 </body>
 </html>
+
