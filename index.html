@@ -3,211 +3,210 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jogo Sustentabilidade</title>
+<title>Sustentabilidade Interativa</title>
 <style>
   body {
-    margin: 0; font-family: Arial, sans-serif;
-    background: #e0f7fa;
-    user-select: none;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e6f2f0;
+    color: #064635;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: #087f5b;
+    padding: 20px;
     text-align: center;
+    color: white;
   }
-  h1 {
-    margin: 20px 0;
-    color: #00796b;
+  header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
   }
-  #jogo {
+  main {
+    flex: 1;
+    padding: 20px;
+    max-width: 900px;
     margin: 0 auto;
-    position: relative;
-    width: 600px;
-    height: 400px;
-    border: 4px solid #004d40;
-    border-radius: 15px;
-    background: #a7ffeb;
-    overflow: hidden;
   }
-  #jogador {
-    position: absolute;
-    width: 40px;
-    height: 40px;
+  .intro {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  button {
     background: #2e7d32;
-    border-radius: 50%;
-    top: 180px;
-    left: 280px;
-    box-shadow: 0 0 8px #1b5e20;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
   }
-  .lixo {
+  button:hover {
+    background: #1b4d23;
+  }
+  .dica {
+    background: #c8e6c9;
+    border-left: 6px solid #2e7d32;
+    padding: 20px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  /* Ícones com CSS */
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  /* Planta */
+  .planta {
+    width: 24px;
+    height: 24px;
+    background: #4caf50;
+    border-radius: 50% 50% 0 0;
+    position: relative;
+  }
+  .planta::before {
+    content: '';
     position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 4px;
+    height: 14px;
+    background: #2e7d32;
+    border-radius: 2px;
   }
-  .reciclavel {
-    box-shadow: 0 0 5px 2px rgba(0,0,0,0.15);
+  /* Gota de água */
+  .gota {
+    width: 18px;
+    height: 28px;
+    background: #2196f3;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
   }
-  .azul { background: #2196f3; }      /* papel */
-  .amarelo { background: #ffeb3b; }   /* plastico */
-  .verde { background: #4caf50; }     /* vidro */
-  .cinza { background: #9e9e9e; }     /* lixo comum */
-  #placar {
-    margin: 15px;
-    font-size: 22px;
-    color: #004d40;
+  .gota::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 8px;
+    height: 14px;
+    background: #bbdefb;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   }
-  #msg {
-    margin-top: 20px;
-    font-size: 24px;
-    color: #d32f2f;
-    font-weight: bold;
+  /* Luz */
+  .luz {
+    width: 20px;
+    height: 28px;
+    background: #ffeb3b;
+    clip-path: polygon(50% 0%, 60% 30%, 100% 40%, 70% 60%, 80% 100%, 50% 80%, 20% 100%, 30% 60%, 0% 40%, 40% 30%);
+    position: relative;
+  }
+  /* Reciclagem */
+  .reciclar {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #388e3c;
+    border-radius: 4px;
+    position: relative;
+  }
+  .reciclar::before,
+  .reciclar::after {
+    content: '';
+    position: absolute;
+    border: 3px solid #388e3c;
+    width: 14px;
+    height: 14px;
+    top: 3px;
+    left: 3px;
+    border-radius: 4px;
+    transform: rotate(45deg);
+  }
+  .reciclar::after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+  }
+  footer {
+    background: #064635;
+    color: #b2dfdb;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    main {
+      padding: 15px;
+    }
+    button {
+      flex: 1 1 100%;
+    }
   }
 </style>
 </head>
 <body>
 
-<h1>Jogo Sustentabilidade: Coletar Lixo Reciclável</h1>
-<div id="jogo">
-  <div id="jogador"></div>
-</div>
-<div id="placar">Recicláveis coletados: 0 | Pontos: 0</div>
-<div id="msg"></div>
+<header>
+  <h1>Sustentabilidade</h1>
+</header>
+
+<main>
+  <p class="intro">Conheça dicas práticas para cuidar do nosso planeta! Clique nos botões abaixo para saber mais.</p>
+
+  <div class="btn-group">
+    <button data-dica="energia"><span class="icon luz"></span>Economize Energia</button>
+    <button data-dica="agua"><span class="icon gota"></span>Preserve a Água</button>
+    <button data-dica="reciclagem"><span class="icon reciclar"></span>Recicle</button>
+    <button data-dica="plantio"><span class="icon planta"></span>Plante Árvores</button>
+  </div>
+
+  <div id="dica-energia" class="dica">
+    <strong>Economize Energia:</strong> Apague as luzes ao sair de um cômodo e prefira lâmpadas LED, que consomem menos energia.
+  </div>
+  <div id="dica-agua" class="dica">
+    <strong>Preserve a Água:</strong> Feche a torneira enquanto escova os dentes e reutilize água sempre que possível.
+  </div>
+  <div id="dica-reciclagem" class="dica">
+    <strong>Recicle:</strong> Separe o lixo reciclável do comum e encaminhe para coleta seletiva para dar uma nova vida aos materiais.
+  </div>
+  <div id="dica-plantio" class="dica">
+    <strong>Plante Árvores:</strong> Árvores ajudam a purificar o ar, conservar o solo e oferecem sombra e abrigo para animais.
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 Sustentabilidade Interativa | Desenvolvido por Você
+</footer>
 
 <script>
-  const jogo = document.getElementById('jogo');
-  const jogador = document.getElementById('jogador');
-  const placar = document.getElementById('placar');
-  const msg = document.getElementById('msg');
+  const botoes = document.querySelectorAll('button[data-dica]');
+  const dicas = document.querySelectorAll('.dica');
 
-  const larguraJogo = jogo.clientWidth;
-  const alturaJogo = jogo.clientHeight;
-
-  let jogadorPos = { x: 280, y: 180 };
-  const jogadorSize = 40;
-  const passo = 20;
-
-  let lixoCaindo = [];
-  let reciclaveisColetados = 0;
-  let pontos = 0;
-  let jogoAtivo = true;
-
-  // Cores de lixo e se é reciclável
-  const tiposLixo = [
-    {cor: 'azul', reciclavel: true},
-    {cor: 'amarelo', reciclavel: true},
-    {cor: 'verde', reciclavel: true},
-    {cor: 'cinza', reciclavel: false}
-  ];
-
-  function criarLixo() {
-    if (!jogoAtivo) return;
-
-    const tipo = tiposLixo[Math.floor(Math.random() * tiposLixo.length)];
-
-    const lixo = document.createElement('div');
-    lixo.classList.add('lixo', tipo.cor);
-    if (tipo.reciclavel) lixo.classList.add('reciclavel');
-    lixo.style.left = Math.floor(Math.random() * (larguraJogo - 30)) + 'px';
-    lixo.style.top = '0px';
-    jogo.appendChild(lixo);
-
-    lixoCaindo.push({elemento: lixo, y: 0, tipo: tipo});
-  }
-
-  function moverLixo() {
-    if (!jogoAtivo) return;
-
-    for(let i = lixoCaindo.length -1; i >= 0; i--) {
-      const lixo = lixoCaindo[i];
-      lixo.y += 3;  // velocidade de queda
-      lixo.elemento.style.top = lixo.y + 'px';
-
-      // Se lixo saiu do jogo, remove
-      if (lixo.y > alturaJogo) {
-        jogo.removeChild(lixo.elemento);
-        lixoCaindo.splice(i,1);
-      }
-    }
-  }
-
-  function atualizarPosicaoJogador() {
-    jogador.style.left = jogadorPos.x + 'px';
-    jogador.style.top = jogadorPos.y + 'px';
-  }
-
-  function checarColisoes() {
-    for(let i = lixoCaindo.length -1; i >= 0; i--) {
-      const lixo = lixoCaindo[i];
-      const lx = lixo.elemento.offsetLeft;
-      const ly = lixo.y;
-
-      if (
-        jogadorPos.x < lx + 30 &&
-        jogadorPos.x + jogadorSize > lx &&
-        jogadorPos.y < ly + 30 &&
-        jogadorPos.y + jogadorSize > ly
-      ) {
-        // coletou lixo
-        if (lixo.tipo.reciclavel) {
-          reciclaveisColetados++;
-          pontos++;
-          placar.textContent = `Recicláveis coletados: ${reciclaveisColetados} | Pontos: ${pontos}`;
-        } else {
-          pontos--;
-          placar.textContent = `Recicláveis coletados: ${reciclaveisColetados} | Pontos: ${pontos}`;
-        }
-        jogo.removeChild(lixo.elemento);
-        lixoCaindo.splice(i, 1);
-
-        verificarFim();
-      }
-    }
-  }
-
-  function verificarFim() {
-    if (reciclaveisColetados >= 10) {
-      msg.textContent = "Parabéns! Você ajudou o planeta! 🌍💚";
-      jogoAtivo = false;
-    } else if (pontos <= -5) {
-      msg.textContent = "Que pena! Muito lixo comum coletado. Tente de novo!";
-      jogoAtivo = false;
-    }
-  }
-
-  window.addEventListener('keydown', e => {
-    if (!jogoAtivo) return;
-
-    switch(e.key) {
-      case 'ArrowUp':
-        jogadorPos.y = Math.max(0, jogadorPos.y - passo);
-        break;
-      case 'ArrowDown':
-        jogadorPos.y = Math.min(alturaJogo - jogadorSize, jogadorPos.y + passo);
-        break;
-      case 'ArrowLeft':
-        jogadorPos.x = Math.max(0, jogadorPos.x - passo);
-        break;
-      case 'ArrowRight':
-        jogadorPos.x = Math.min(larguraJogo - jogadorSize, jogadorPos.x + passo);
-        break;
-    }
-    atualizarPosicaoJogador();
-    checarColisoes();
+  botoes.forEach(botao => {
+    botao.addEventListener('click', () => {
+      const idDica = 'dica-' + botao.getAttribute('data-dica');
+      dicas.forEach(d => {
+        d.style.display = (d.id === idDica) ? 'block' : 'none';
+      });
+      // Scroll suave para a dica exibida
+      const dicaAtiva = document.getElementById(idDica);
+      dicaAtiva.scrollIntoView({behavior: 'smooth', block: 'center'});
+    });
   });
-
-  atualizarPosicaoJogador();
-
-  // Criar lixo a cada 1 segundo
-  const intervaloCriar = setInterval(() => {
-    if (jogoAtivo) criarLixo();
-  }, 1000);
-
-  // Mover lixo 60 vezes por segundo
-  const intervaloMover = setInterval(() => {
-    if (jogoAtivo) {
-      moverLixo();
-      checarColisoes();
-    }
-  }, 16);
-
 </script>
 
 </body>
