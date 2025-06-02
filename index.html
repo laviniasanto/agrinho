@@ -1,121 +1,312 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conscientização Sustentável</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVida - Sustentabilidade para um Futuro Melhor</title>
+    <meta name="description" content="Portal completo sobre sustentabilidade, eco-friendly e vida verde">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>Vamos Falar de Sustentabilidade!</h1>
-    <nav>
-      <ul>
-        <li><a href="#quiz">Quiz</a></li>
-        <li><a href="#dicas">Dicas</a></li>
-        <li><a href="#calculadora">Calculadora CO₂</a></li>
-        <li><a href="#noticias">Notícias</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <section>
-      <p>Aprenda como pequenas ações podem ajudar a salvar o planeta.</p>
-
-      <div id="quiz" class="quiz">
-        <h2>Quiz Sustentável</h2>
-        <p id="question">Qual dessas atitudes é mais sustentável?</p>
-        <ul>
-          <li><input type="radio" name="resposta" value="errado"> Usar sacolas plásticas</li>
-          <li><input type="radio" name="resposta" value="correto"> Levar sacola reutilizável</li>
-          <li><input type="radio" name="resposta" value="errado"> Jogar lixo no chão</li>
-        </ul>
-        <button onclick="verificarResposta()">Verificar</button>
-        <p id="resultado" class="hidden"></p>
-      </div>
-
-      <div id="dicas" class="quiz">
-        <h2>Dicas Sustentáveis</h2>
-        <ul>
-          <li>Separe o lixo reciclável do orgânico.</li>
-          <li>Economize energia desligando aparelhos não utilizados.</li>
-          <li>Reduza o consumo de água durante o banho.</li>
-          <li>Plante árvores e incentive áreas verdes.</li>
-        </ul>
-      </div>
-
-      <div id="calculadora" class="quiz">
-        <h2>Calculadora de Emissão de CO₂</h2>
-        <label for="km">Quantos km você dirige por semana?</label><br>
-        <input type="number" id="km" placeholder="Ex: 150"><br><br>
-        <button onclick="calcularCO2()">Calcular</button>
-        <p id="resultadoCO2"></p>
-      </div>
-
-      <div id="noticias" class="quiz">
-        <h2>Notícias Sustentáveis</h2>
-        <div id="feedNoticias">
-          <p>Carregando notícias...</p>
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Eco<span>Vida</span></a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#praticas">Práticas</a></li>
+                <li><a href="#impacto">Impacto</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Sustentabilidade para um Futuro Melhor</h1>
+            <p>Descubra como pequenas ações podem fazer uma grande diferença para o nosso planeta.</p>
+            <a href="#praticas" class="btn">Comece Agora</a>
+        </div>
+        <div class="hero-image">
+            <img src="images/earth-hero.png" alt="Planeta Terra com folhas verdes">
+        </div>
+    </header>
+
+    <!-- Seção Sobre -->
+    <section id="sobre" class="about-section">
+        <div class="container">
+            <h2>Por Que Sustentabilidade Importa?</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <i class="fas fa-tree"></i>
+                    <h3>Preservação</h3>
+                    <p>Proteger nossos ecossistemas e biodiversidade para as futuras gerações.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Economia Circular</h3>
+                    <p>Reduzir, reutilizar e reciclar para minimizar o desperdício.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-sun"></i>
+                    <h3>Energia Limpa</h3>
+                    <p>Transição para fontes renováveis e redução de emissões.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-hand-holding-water"></i>
+                    <h3>Conservação</h3>
+                    <p>Uso responsável dos recursos naturais para garantir sua disponibilidade.</p>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 - Projeto de Conscientização Sustentável. Desenvolvido para fins educativos.</p>
-  </footer>
+    <!-- Seção de Estatísticas -->
+    <section class="stats-section">
+        <div class="container">
+            <h2>Números que Impactam</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="91">0</div>
+                    <div class="stat-label">% do plástico não é reciclado</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="40">0</div>
+                    <div class="stat-label">% das espécies em risco</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="75">0</div>
+                    <div class="stat-label">% da terra degradada</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="1">0</div>
+                    <div class="stat-label">Terra só temos uma</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    function verificarResposta() {
-      const opcoes = document.getElementsByName("resposta");
-      let resultado = document.getElementById("resultado");
+    <!-- Seção de Práticas Sustentáveis -->
+    <section id="praticas" class="practices-section">
+        <div class="container">
+            <h2>Práticas Sustentáveis para Adotar Hoje</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="casa">Em Casa</button>
+                <button class="tab-btn" data-tab="trabalho">No Trabalho</button>
+                <button class="tab-btn" data-tab="comunidade">Na Comunidade</button>
+            </div>
+            
+            <div class="tab-content active" id="casa">
+                <div class="practice-grid">
+                    <div class="practice-card">
+                        <img src="images/compostagem.jpg" alt="Compostagem">
+                        <h3>Compostagem</h3>
+                        <p>Transforme resíduos orgânicos em adubo nutritivo para plantas.</p>
+                        <a href="#" class="learn-more">Saiba mais →</a>
+                    </div>
+                    <div class="practice-card">
+                        <img src="images/energia-solar.jpg" alt="Energia Solar">
+                        <h3>Energia Solar</h3>
+                        <p>Considere instalar painéis solares para reduzir sua conta de energia.</p>
+                        <a href="#" class="learn-more">Saiba mais →</a>
+                    </div>
+                    <div class="practice-card">
+                        <img src="images/agua.jpg" alt="Conservação de Água">
+                        <h3>Conservação de Água</h3>
+                        <p>Instale redutores de vazão e reaproveite água da chuva.</p>
+                        <a href="#" class="learn-more">Saiba mais →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="trabalho">
+                <!-- Conteúdo para práticas no trabalho -->
+            </div>
+            
+            <div class="tab-content" id="comunidade">
+                <!-- Conteúdo para práticas na comunidade -->
+            </div>
+        </div>
+    </section>
 
-      for (let opcao of opcoes) {
-        if (opcao.checked) {
-          if (opcao.value === "correto") {
-            resultado.textContent = "Correto! Usar sacolas reutilizáveis reduz o lixo plástico.";
-            resultado.style.color = "green";
-          } else {
-            resultado.textContent = "Errado! Pense em como suas ações impactam o meio ambiente.";
-            resultado.style.color = "red";
-          }
-          resultado.classList.remove("hidden");
-          return;
-        }
-      }
-      resultado.textContent = "Por favor, selecione uma opção.";
-      resultado.style.color = "orange";
-      resultado.classList.remove("hidden");
-    }
+    <!-- Seção de Calculadora de Pegada Ecológica -->
+    <section class="calculator-section">
+        <div class="container">
+            <h2>Calcule Sua Pegada Ecológica</h2>
+            <div class="calculator">
+                <form id="footprint-form">
+                    <div class="form-group">
+                        <label for="transport">Transporte:</label>
+                        <select id="transport" name="transport">
+                            <option value="low">Ando a pé/bicicleta</option>
+                            <option value="medium">Uso transporte público</option>
+                            <option value="high">Dirijo carro particular</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="energy">Energia em Casa:</label>
+                        <select id="energy" name="energy">
+                            <option value="low">Energia renovável</option>
+                            <option value="medium">Misto</option>
+                            <option value="high">Energia convencional</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diet">Dieta:</label>
+                        <select id="diet" name="diet">
+                            <option value="low">Vegana</option>
+                            <option value="medium">Vegetariana</option>
+                            <option value="high">Inclui carne diariamente</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Calcular</button>
+                </form>
+                
+                <div class="result" id="result">
+                    <canvas id="footprint-chart"></canvas>
+                    <div class="tips" id="tips"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function calcularCO2() {
-      const km = document.getElementById("km").value;
-      const resultadoCO2 = document.getElementById("resultadoCO2");
-      const emissao = km * 0.2;
+    <!-- Seção de Blog/Notícias -->
+    <section class="blog-section">
+        <div class="container">
+            <h2>Últimas do Nosso Blog</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="images/blog1.jpg" alt="Cidades Sustentáveis">
+                    <div class="blog-content">
+                        <span class="category">Urbanismo</span>
+                        <h3><a href="blog/post1.html">Como Construir Cidades Mais Verdes</a></h3>
+                        <p>Estratégias para integrar natureza e planejamento urbano...</p>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> 15 Maio 2023</span>
+                            <span><i class="far fa-clock"></i> 5 min leitura</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <img src="images/blog2.jpg" alt="Moda Sustentável">
+                    <div class="blog-content">
+                        <span class="category">Moda</span>
+                        <h3><a href="#">O Impacto da Moda Rápida no Planeta</a></h3>
+                        <p>Alternativas sustentáveis para seu guarda-roupa...</p>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> 2 Maio 2023</span>
+                            <span><i class="far fa-clock"></i> 4 min leitura</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <img src="images/blog3.jpg" alt="Tecnologia Verde">
+                    <div class="blog-content">
+                        <span class="category">Tecnologia</span>
+                        <h3><a href="#">Inovações Tecnológicas para Sustentabilidade</a></h3>
+                        <p>Como a tecnologia está ajudando a combater as mudanças climáticas...</p>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> 20 Abril 2023</span>
+                            <span><i class="far fa-clock"></i> 7 min leitura</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <a href="blog/" class="btn-outline">Ver Todos os Artigos</a>
+        </div>
+    </section>
 
-      if (!km || km <= 0) {
-        resultadoCO2.textContent = "Digite um valor válido de quilômetros.";
-        resultadoCO2.style.color = "orange";
-      } else {
-        resultadoCO2.textContent = `Você emite aproximadamente ${emissao.toFixed(2)} kg de CO₂ por semana.`;
-        resultadoCO2.style.color = "#2e7d32";
-      }
-    }
+    <!-- Seção de Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Assine Nossa Newsletter</h2>
+                <p>Receba dicas, notícias e guias sobre sustentabilidade diretamente no seu e-mail.</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" class="btn">Assinar</button>
+                </form>
+                <p class="small">Respeitamos sua privacidade. Você pode cancelar a qualquer momento.</p>
+            </div>
+        </div>
+    </section>
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const feed = document.getElementById("feedNoticias");
-      // Simula carregamento de notícias (substituível por API real)
-      setTimeout(() => {
-        feed.innerHTML = `
-          <ul>
-            <li><strong>[01/06]</strong> Estudo aponta queda na emissão de CO₂ com transporte público.</li>
-            <li><strong>[31/05]</strong> Comunidades se unem para reflorestamento de áreas urbanas.</li>
-            <li><strong>[30/05]</strong> Nova lei incentiva uso de painéis solares em escolas públicas.</li>
-          </ul>
-        `;
-      }, 1000);
-    });
-  </script>
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>EcoVida</h3>
+                    <p>Promovendo conscientização e ação para um planeta mais sustentável desde 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#praticas">Práticas</a></li>
+                        <li><a href="#impacto">Impacto</a></li>
+                        <li><a href="blog/">Blog</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Calculadora de Pegada</a></li>
+                        <li><a href="#">Guia de Reciclagem</a></li>
+                        <li><a href="#">Mapa de Pontos de Coleta</a></li>
+                        <li><a href="#">Eventos Locais</a></li>
+                        <li><a href="#">Parceiros Sustentáveis</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contato</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Rua Verde, 123 - São Paulo, SP</li>
+                        <li><i class="fas fa-phone"></i> (11) 98765-4321</li>
+                        <li><i class="fas fa-envelope"></i> contato@ecovida.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 EcoVida. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Mapa do Site</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/charts.js"></script>
 </body>
 </html>
