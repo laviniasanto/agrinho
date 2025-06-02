@@ -1,213 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sustentabilidade Interativa</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #e6f2f0;
-    color: #064635;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  header {
-    background: #087f5b;
-    padding: 20px;
-    text-align: center;
-    color: white;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    letter-spacing: 2px;
-  }
-  main {
-    flex: 1;
-    padding: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .intro {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-  }
-  .btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-  }
-  button {
-    background: #2e7d32;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background: #1b4d23;
-  }
-  .dica {
-    background: #c8e6c9;
-    border-left: 6px solid #2e7d32;
-    padding: 20px;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: none;
-  }
-  /* Ícones com CSS */
-  .icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  /* Planta */
-  .planta {
-    width: 24px;
-    height: 24px;
-    background: #4caf50;
-    border-radius: 50% 50% 0 0;
-    position: relative;
-  }
-  .planta::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 10px;
-    width: 4px;
-    height: 14px;
-    background: #2e7d32;
-    border-radius: 2px;
-  }
-  /* Gota de água */
-  .gota {
-    width: 18px;
-    height: 28px;
-    background: #2196f3;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    position: relative;
-  }
-  .gota::before {
-    content: '';
-    position: absolute;
-    top: 6px;
-    left: 5px;
-    width: 8px;
-    height: 14px;
-    background: #bbdefb;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  }
-  /* Luz */
-  .luz {
-    width: 20px;
-    height: 28px;
-    background: #ffeb3b;
-    clip-path: polygon(50% 0%, 60% 30%, 100% 40%, 70% 60%, 80% 100%, 50% 80%, 20% 100%, 30% 60%, 0% 40%, 40% 30%);
-    position: relative;
-  }
-  /* Reciclagem */
-  .reciclar {
-    width: 24px;
-    height: 24px;
-    border: 3px solid #388e3c;
-    border-radius: 4px;
-    position: relative;
-  }
-  .reciclar::before,
-  .reciclar::after {
-    content: '';
-    position: absolute;
-    border: 3px solid #388e3c;
-    width: 14px;
-    height: 14px;
-    top: 3px;
-    left: 3px;
-    border-radius: 4px;
-    transform: rotate(45deg);
-  }
-  .reciclar::after {
-    top: 6px;
-    left: 6px;
-    width: 8px;
-    height: 8px;
-    border-width: 2px;
-  }
-  footer {
-    background: #064635;
-    color: #b2dfdb;
-    text-align: center;
-    padding: 15px;
-    font-size: 0.9rem;
-  }
-  @media (max-width: 600px) {
-    main {
-      padding: 15px;
-    }
-    button {
-      flex: 1 1 100%;
-    }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conscientização Sustentável</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>Vamos Falar de Sustentabilidade!</h1>
+  </header>
+  <section>
+    <p>Aprenda como pequenas ações podem ajudar a salvar o planeta.</p>
+    <div class="quiz">
+      <h2>Quiz Sustentável</h2>
+      <p id="question">Qual dessas atitudes é mais sustentável?</p>
+      <ul>
+        <li><input type="radio" name="resposta" value="errado"> Usar sacolas plásticas</li>
+        <li><input type="radio" name="resposta" value="correto"> Levar sacola reutilizável</li>
+        <li><input type="radio" name="resposta" value="errado"> Jogar lixo no chão</li>
+      </ul>
+      <button onclick="verificarResposta()">Verificar</button>
+      <p id="resultado" class="hidden"></p>
+    </div>
+  </section>
+  <script>
+    function verificarResposta() {
+      const opcoes = document.getElementsByName("resposta");
+      let resultado = document.getElementById("resultado");
+      let respostaCerta = false;
 
-<header>
-  <h1>Sustentabilidade</h1>
-</header>
-
-<main>
-  <p class="intro">Conheça dicas práticas para cuidar do nosso planeta! Clique nos botões abaixo para saber mais.</p>
-
-  <div class="btn-group">
-    <button data-dica="energia"><span class="icon luz"></span>Economize Energia</button>
-    <button data-dica="agua"><span class="icon gota"></span>Preserve a Água</button>
-    <button data-dica="reciclagem"><span class="icon reciclar"></span>Recicle</button>
-    <button data-dica="plantio"><span class="icon planta"></span>Plante Árvores</button>
-  </div>
-
-  <div id="dica-energia" class="dica">
-    <strong>Economize Energia:</strong> Apague as luzes ao sair de um cômodo e prefira lâmpadas LED, que consomem menos energia.
-  </div>
-  <div id="dica-agua" class="dica">
-    <strong>Preserve a Água:</strong> Feche a torneira enquanto escova os dentes e reutilize água sempre que possível.
-  </div>
-  <div id="dica-reciclagem" class="dica">
-    <strong>Recicle:</strong> Separe o lixo reciclável do comum e encaminhe para coleta seletiva para dar uma nova vida aos materiais.
-  </div>
-  <div id="dica-plantio" class="dica">
-    <strong>Plante Árvores:</strong> Árvores ajudam a purificar o ar, conservar o solo e oferecem sombra e abrigo para animais.
-  </div>
-</main>
-
-<footer>
-  &copy; 2025 Sustentabilidade Interativa | Desenvolvido por Você
-</footer>
-
-<script>
-  const botoes = document.querySelectorAll('button[data-dica]');
-  const dicas = document.querySelectorAll('.dica');
-
-  botoes.forEach(botao => {
-    botao.addEventListener('click', () => {
-      const idDica = 'dica-' + botao.getAttribute('data-dica');
-      dicas.forEach(d => {
-        d.style.display = (d.id === idDica) ? 'block' : 'none';
-      });
-      // Scroll suave para a dica exibida
-      const dicaAtiva = document.getElementById(idDica);
-      dicaAtiva.scrollIntoView({behavior: 'smooth', block: 'center'});
-    });
-  });
-</script>
-
+      for (let opcao of opcoes) {
+        if (opcao.checked) {
+          if (opcao.value === "correto") {
+            resultado.textContent = "Correto! Usar sacolas reutilizáveis reduz o lixo plástico.";
+            resultado.style.color = "green";
+          } else {
+            resultado.textContent = "Errado! Pense em como suas ações impactam o meio ambiente.";
+            resultado.style.color = "red";
+          }
+          resultado.classList.remove("hidden");
+          return;
+        }
+      }
+      resultado.textContent = "Por favor, selecione uma opção.";
+      resultado.style.color = "orange";
+      resultado.classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
