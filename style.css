@@ -1,11 +1,18 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #e0f7e9;
+/* Reset e estilo base */
+* {
   margin: 0;
   padding: 0;
-  color: #2e7d32;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #e6f5ec;
+  color: #2e7d32;
+  line-height: 1.6;
+}
+
+/* Cabeçalho */
 header {
   background-color: #1b5e20;
   color: white;
@@ -13,13 +20,15 @@ header {
   text-align: center;
 }
 
+header h1 {
+  margin-bottom: 10px;
+}
+
 nav ul {
   list-style: none;
-  padding: 0;
-  margin: 10px 0 0 0;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 30px;
 }
 
 nav ul li a {
@@ -32,28 +41,45 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
-section {
-  padding: 20px;
+/* Conteúdo principal */
+main {
+  padding: 30px 20px;
 }
 
+/* Seções de conteúdo */
 .quiz {
   background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
-  margin: 40px auto;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quiz h2 {
+  margin-bottom: 15px;
+  color: #1b5e20;
+}
+
+.quiz ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.quiz ul li {
+  margin: 10px 0;
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #43a047;
   color: white;
-  border: none;
   padding: 10px 20px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -66,17 +92,28 @@ input[type=\"number\"] {
   max-width: 300px;
   margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .hidden {
   display: none;
 }
 
-ul {
+/* Notícias */
+#feedNoticias ul {
+  list-style: disc;
   padding-left: 20px;
 }
 
-ul li {
-  margin: 8px 0;
+#feedNoticias li {
+  margin-bottom: 10px;
+}
+
+/* Rodapé */
+footer {
+  background-color: #1b5e20;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
 }

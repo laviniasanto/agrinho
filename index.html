@@ -14,42 +14,58 @@
         <li><a href="#quiz">Quiz</a></li>
         <li><a href="#dicas">Dicas</a></li>
         <li><a href="#calculadora">Calculadora CO₂</a></li>
+        <li><a href="#noticias">Notícias</a></li>
       </ul>
     </nav>
   </header>
-  <section>
-    <p>Aprenda como pequenas ações podem ajudar a salvar o planeta.</p>
 
-    <div id="quiz" class="quiz">
-      <h2>Quiz Sustentável</h2>
-      <p id="question">Qual dessas atitudes é mais sustentável?</p>
-      <ul>
-        <li><input type="radio" name="resposta" value="errado"> Usar sacolas plásticas</li>
-        <li><input type="radio" name="resposta" value="correto"> Levar sacola reutilizável</li>
-        <li><input type="radio" name="resposta" value="errado"> Jogar lixo no chão</li>
-      </ul>
-      <button onclick="verificarResposta()">Verificar</button>
-      <p id="resultado" class="hidden"></p>
-    </div>
+  <main>
+    <section>
+      <p>Aprenda como pequenas ações podem ajudar a salvar o planeta.</p>
 
-    <div id="dicas" class="quiz">
-      <h2>Dicas Sustentáveis</h2>
-      <ul>
-        <li>Separe o lixo reciclável do orgânico.</li>
-        <li>Economize energia desligando aparelhos não utilizados.</li>
-        <li>Reduza o consumo de água durante o banho.</li>
-        <li>Plante árvores e incentive áreas verdes.</li>
-      </ul>
-    </div>
+      <div id="quiz" class="quiz">
+        <h2>Quiz Sustentável</h2>
+        <p id="question">Qual dessas atitudes é mais sustentável?</p>
+        <ul>
+          <li><input type="radio" name="resposta" value="errado"> Usar sacolas plásticas</li>
+          <li><input type="radio" name="resposta" value="correto"> Levar sacola reutilizável</li>
+          <li><input type="radio" name="resposta" value="errado"> Jogar lixo no chão</li>
+        </ul>
+        <button onclick="verificarResposta()">Verificar</button>
+        <p id="resultado" class="hidden"></p>
+      </div>
 
-    <div id="calculadora" class="quiz">
-      <h2>Calculadora de Emissão de CO₂</h2>
-      <label for="km">Quantos km você dirige por semana?</label><br>
-      <input type="number" id="km" placeholder="Ex: 150"><br><br>
-      <button onclick="calcularCO2()">Calcular</button>
-      <p id="resultadoCO2"></p>
-    </div>
-  </section>
+      <div id="dicas" class="quiz">
+        <h2>Dicas Sustentáveis</h2>
+        <ul>
+          <li>Separe o lixo reciclável do orgânico.</li>
+          <li>Economize energia desligando aparelhos não utilizados.</li>
+          <li>Reduza o consumo de água durante o banho.</li>
+          <li>Plante árvores e incentive áreas verdes.</li>
+        </ul>
+      </div>
+
+      <div id="calculadora" class="quiz">
+        <h2>Calculadora de Emissão de CO₂</h2>
+        <label for="km">Quantos km você dirige por semana?</label><br>
+        <input type="number" id="km" placeholder="Ex: 150"><br><br>
+        <button onclick="calcularCO2()">Calcular</button>
+        <p id="resultadoCO2"></p>
+      </div>
+
+      <div id="noticias" class="quiz">
+        <h2>Notícias Sustentáveis</h2>
+        <div id="feedNoticias">
+          <p>Carregando notícias...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Projeto de Conscientização Sustentável. Desenvolvido para fins educativos.</p>
+  </footer>
+
   <script>
     function verificarResposta() {
       const opcoes = document.getElementsByName("resposta");
@@ -76,7 +92,7 @@
     function calcularCO2() {
       const km = document.getElementById("km").value;
       const resultadoCO2 = document.getElementById("resultadoCO2");
-      const emissao = km * 0.2; // média de 0.2kg CO2 por km
+      const emissao = km * 0.2;
 
       if (!km || km <= 0) {
         resultadoCO2.textContent = "Digite um valor válido de quilômetros.";
@@ -86,6 +102,20 @@
         resultadoCO2.style.color = "#2e7d32";
       }
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const feed = document.getElementById("feedNoticias");
+      // Simula carregamento de notícias (substituível por API real)
+      setTimeout(() => {
+        feed.innerHTML = `
+          <ul>
+            <li><strong>[01/06]</strong> Estudo aponta queda na emissão de CO₂ com transporte público.</li>
+            <li><strong>[31/05]</strong> Comunidades se unem para reflorestamento de áreas urbanas.</li>
+            <li><strong>[30/05]</strong> Nova lei incentiva uso de painéis solares em escolas públicas.</li>
+          </ul>
+        `;
+      }, 1000);
+    });
   </script>
 </body>
 </html>
