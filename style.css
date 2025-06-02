@@ -13,6 +13,25 @@ header {
   text-align: center;
 }
 
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
 section {
   padding: 20px;
 }
@@ -22,8 +41,8 @@ section {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 700px;
+  margin: 40px auto;
 }
 
 button {
@@ -34,12 +53,30 @@ button {
   margin-top: 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 16px;
 }
 
 button:hover {
   background-color: #388e3c;
 }
 
+input[type=\"number\"] {
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .hidden {
   display: none;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  margin: 8px 0;
 }

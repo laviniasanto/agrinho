@@ -9,10 +9,18 @@
 <body>
   <header>
     <h1>Vamos Falar de Sustentabilidade!</h1>
+    <nav>
+      <ul>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#dicas">Dicas</a></li>
+        <li><a href="#calculadora">Calculadora CO₂</a></li>
+      </ul>
+    </nav>
   </header>
   <section>
     <p>Aprenda como pequenas ações podem ajudar a salvar o planeta.</p>
-    <div class="quiz">
+
+    <div id="quiz" class="quiz">
       <h2>Quiz Sustentável</h2>
       <p id="question">Qual dessas atitudes é mais sustentável?</p>
       <ul>
@@ -23,12 +31,29 @@
       <button onclick="verificarResposta()">Verificar</button>
       <p id="resultado" class="hidden"></p>
     </div>
+
+    <div id="dicas" class="quiz">
+      <h2>Dicas Sustentáveis</h2>
+      <ul>
+        <li>Separe o lixo reciclável do orgânico.</li>
+        <li>Economize energia desligando aparelhos não utilizados.</li>
+        <li>Reduza o consumo de água durante o banho.</li>
+        <li>Plante árvores e incentive áreas verdes.</li>
+      </ul>
+    </div>
+
+    <div id="calculadora" class="quiz">
+      <h2>Calculadora de Emissão de CO₂</h2>
+      <label for="km">Quantos km você dirige por semana?</label><br>
+      <input type="number" id="km" placeholder="Ex: 150"><br><br>
+      <button onclick="calcularCO2()">Calcular</button>
+      <p id="resultadoCO2"></p>
+    </div>
   </section>
   <script>
     function verificarResposta() {
       const opcoes = document.getElementsByName("resposta");
       let resultado = document.getElementById("resultado");
-      let respostaCerta = false;
 
       for (let opcao of opcoes) {
         if (opcao.checked) {
@@ -46,6 +71,20 @@
       resultado.textContent = "Por favor, selecione uma opção.";
       resultado.style.color = "orange";
       resultado.classList.remove("hidden");
+    }
+
+    function calcularCO2() {
+      const km = document.getElementById("km").value;
+      const resultadoCO2 = document.getElementById("resultadoCO2");
+      const emissao = km * 0.2; // média de 0.2kg CO2 por km
+
+      if (!km || km <= 0) {
+        resultadoCO2.textContent = "Digite um valor válido de quilômetros.";
+        resultadoCO2.style.color = "orange";
+      } else {
+        resultadoCO2.textContent = `Você emite aproximadamente ${emissao.toFixed(2)} kg de CO₂ por semana.`;
+        resultadoCO2.style.color = "#2e7d32";
+      }
     }
   </script>
 </body>
